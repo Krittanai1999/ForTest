@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+  <h3 class="text-light text-center">EDIT  INFORMATION</h3>
+  <hr class="bg-light">
+  {% if course.id %}
+  <form method="POST" action="{% url 'course_update' course_id=course.id %}">
+    {% else %}
+    <form method="POST" action="{% url 'course_add' %}">
+      {% endif %} 
+      {% csrf_token %}
+      {% if msg %}<p class="text-success">{{msg}}</p>{% endif %}
+
+      <h5 class="card-title text-light">COURSE</h5>
+      <form>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="name">SUBJECT</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{course.name}}">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="course_id">COURSE_ID</label>
+            <input type="text" class="form-control" id="course_id" name="course_id" value="{{course.course_id}}">
+          </div>
+          
+          <div class="form-group col-md-4">
+            <label for="room">ROOM</label>
+            <input type="text" class="form-control" id="room" name="room" value="{{course.room}}">
+          </div>
+
+          <div class="form-group col-md-4">
+          <label for="weekday">วันที่เรียน</label>
+          <select class="form-control" id="weekday" name="weekday" required>
+            <option value=''>---SELECT---</option>
+            {% for w in weekday %}
+            <option value='{{w.0}}' {% if course.weekday == weekday %}selected{% endif %}>
+                {{w.1}}
+            </option>
+            {% endfor %}
+        </select>
+        </div>
+
+          <div class="form-group col-md-4">
+            <label for="capacity">จำนวนรับ</label>
+            <input type="text" class="form-control" id="capacity" name="capacity" value="{{course.capacity}}">
+          </div>
+
+          <div class="form-group col-md-4">
+            <label for="start_time">เวลาเริ่ม</label>
+            <input type="time" class="form-control" id="start_time" name="start_time" value="{{course.start_time}}">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="end_time">เวลาจบ</label>
+            <input type="time" class="form-control" id="end_time" name="end_time" value="{{course.end_time}}">
+          </div>
+          
+          {% comment %} <div class="form-group col-md-4">
+            <label for="teach_course">ครูผู้สอน</label>
+            <input type="" class="form-control" id="teach_course" name="teach_course" value="{{course.teach_course}}">
+          </div> {% endcomment %}
+          
+        </div>
+        <button type="submit" class="btn btn-primary">COMFIRM</button>
+        <button type="reset" class="btn btn-warning ml-3">RESET</button>
+      </form>
+</div>
+{% endblock %}

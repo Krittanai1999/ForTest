@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+  <h3 class="text-light text-center">EDIT TEACHER INFORMATION</h3>
+  <hr class="bg-light">
+  {% if teacher.id %}
+  <form method="POST" action="{% url 'teacher_update' teacher_id=teacher.id %}">
+    {% else %}
+    <form method="POST" action="{% url 'teacher_add' %}">
+      {% endif %} 
+      {% csrf_token %}
+      {% if msg %}<p class="text-success">{{msg}}</p>{% endif %}
+
+      <h5 class="card-title text-light">TEACHER</h5>
+      <form>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="first_name">FIRSTNAME</label>
+            <input type="text" class="form-control" id="first_name" name="first_name" value="{{teacher.first_name}}">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="last_name">LASTNAME</label>
+            <input type="text" class="form-control" id="last_name" name="last_name" value="{{teacher.last_name}}">
+          </div>
+          
+          <div class="form-group col-md-4">
+            <label for="room">ROOM</label>
+            <input type="text" class="form-control" id="room" name="room" value="{{teacher.room}}">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="phone_number">MOBILE NO.</label>
+            <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{teacher.phone_number}}">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="email">EMAIL</label>
+            <input type="email" class="form-control" id="email" name="email" value="{{teacher.email}}">
+          </div>
+          {% comment %} <form>
+            <div class="form-group col-md-4">
+              <label for="exampleFormControlFile1">UPLOAD PICTURE</label>
+              <input type="file" class="form-control-file" id="exampleFormControlFile1">
+            </div>
+          </form> {% endcomment %}
+
+        </div>
+        <button type="submit" class="btn btn-primary">COMFIRM</button>
+        <button type="reset" class="btn btn-warning ml-3">RESET</button>
+      </form>
+</div>
+{% endblock %}
