@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h2 class="text-light">CHECK IN CLASS &emsp;<a href="{% url 'enrollclass' %}">
+        <div class="btn btn-outline-primary" id="">ENROLL CLASS</div></a> 
+    </h2>
+    <hr class="bg-light">
+    <form class="form-inline" method="POST" action="{% url 'index' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="inputSearch">SEARCH COUSRE : </label>&emsp;
+            <input type="text" class="form-control form-control-sm" id="inputSearch" name="search"
+                placeholder="ค้นหาชื่อวิชา">
+        </div>
+        <button type="submit" class="btn btn-primary ml-3">SEARCH</button>
+    </form><br/><br/>
+    <p class="card-text">
+        <table class="table table-hove">
+            <thead class="thead-dark text-center">
+                <tr>
+                    <th scope="col">COURSE</th>
+                    <th scope="col">CHECK IN NOW</th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                {% for er in enroll %}
+                <tr>
+                    <td>{{ er.course }}</td>
+                    <td><a href="#">
+                        <div class="btn btn-success">CHECK IN CLASS</div></a></td>
+                    <td>{{ std.student_user_id}}</td> 
+                </tr>
+                {% endfor %} 
+            </tbody>
+        </table>
+    </p>
+</div>
+{% endblock %}

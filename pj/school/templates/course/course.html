@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h2 class="text-light">COURSE INFORMATION
+        
+        <a href="{% url 'course_add' %}"><button type="button" class="btn btn-secondary ml-3 btn btn-warning ">CREATE NEW  COURSE</button></a> 
+            </h2><hr class="bg-light">
+            <form class="form-inline" method="POST" action="{% url 'index' %}">
+              {% csrf_token %}
+              <div class="form-group">
+                  <label for="inputSearch">SEARCH COUSRE : </label>&emsp;
+                  <input type="text" class="form-control form-control-sm" id="inputSearch" name="search"
+                      placeholder="ค้นหาชื่อวิชา">
+              </div>
+              <button type="submit" class="btn btn-primary ml-3">SEARCH</button>
+          </form><br/>
+          {% for c in course %}
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">SUBJECT : {{ c.name }}</h5>
+              <p class="card-text">
+              <ROOM class="card-text">COURSE ID : {{ c.course_id }}&emsp;&emsp;ROOM : {{ c.room }}</p>
+                      <p class="card-text">DAY : {{ c.weekday }}&emsp;&emsp;START TIME : {{ c.start_time }}&emsp;&emsp;END TIME : {{ c.end_time }}</p>
+                      <p class="card-text">CAPACITY : {{ c.capacity }}&emsp;&emsp;<br><br>
+                      {% for tc in c.teach_course.all %}TEACHER : {{ tc.first_name }} {{ tc.last_name }}</p>{% endfor %}
+              </ROOM>
+              <p class="card-text">
+                <a href="{% url 'course_update' course_id=c.id %}">
+                <div class="btn btn-outline-primary" id="{{c.id}}">EDIT</div></a> 
+                <a href="{% url 'course_delete' course_id=c.id %}">
+                <div class="btn btn-outline-warning" id="{{c.id}}">DELETE</div></a>
+                <a href="{% url 'detail' course_id=c.id %}">
+                <div class="btn btn-outline-primary" id="{{c.id}}">DETAIL</div></a>  
+              </p>
+            </div>
+          </div><br>
+          {% endfor %}
+          {% comment %}
+           {% for c in course %}
+            <div class="row row-cols-1 row-cols-md-3">
+                <div class="col mb-4">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">SUBJECT : {{ c.name }}</h5>
+                      <p class="card-text">COURSE ID : {{ c.course_id }}</p>
+                      <p class="card-text">ROOM : {{ c.room }}</p>
+                      <p class="card-text">วันที่เรียน : {{ c.weekday }}</p>
+                      <p class="card-text">จำนวนรับ : {{ c.capacity }}</p>
+                      <p class="card-text">Start time : {{ c.start_time }}</p>
+                      <p class="card-text">End time : {{ c.end_time }}</p>
+                      
+                      {% for tc in c.teach_course.all %}<p class="card-text">ครูผู้สอน : {{ tc.first_name }} {{ tc.last_name }}</p>{% endfor %}
+
+                      <p class="card-text">
+                        <a href="{% url 'course_update' course_id=c.id %}">
+                        <div class="btn btn-outline-primary" id="{{c.id}}">EDIT</div></a> 
+                        <a href="{% url 'course_delete' course_id=c.id %}">
+                        <div class="btn btn-outline-warning" id="{{c.id}}">DELETE</div></a>  
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+            {% endcomment %}
+           
+      
+</div>
+{% endblock %}
+
+

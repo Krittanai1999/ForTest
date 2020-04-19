@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h3 class="text-light">CHECK IN SCHOOL</h3>
+    <hr class="bg-light">
+    <h4>STUDENT INFORMATION</h4>
+    {% if score.id %}
+    <!-- Submit to class_update view -->
+    <form method="POST" action="{% url 'scoreupdate' score_id=score.id %}">
+        {% else %}
+
+        <!-- Submit to student_add view -->
+        <form method="POST" action="{% url 'scoreadd' %}">
+            {% endif %}
+
+            {% csrf_token %}
+            {% if msg %}<p class="text-success">{{msg}}</p>{% endif %}
+            <div class="form-group col-md-4">
+                <label for="student">STUDENT</label>
+                <select class="form-control" id="student" name="student">
+                    <option value=''>---SELECT---</option>
+                    {% for std in student %}
+                    <option value='{{ std.id }}'>{{std.first_name}} {{std.last_name}}</option>
+
+                    {% endfor %}
+                </select>
+            </div><br>
+            <h5>SCORE</h5>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="class_room">SCORE (POINT : 100)</label>
+                    <input type="text" class="form-control" id="point" name="point" value="{{score.point}}" required>
+                </div>
+            </div><br>
+            <h5 class="card-titletext-light">เกณฑ์การหักคะแนน</h5>
+            <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    มาสาย
+                    <span class="badge badge-primary badge-pill">-3</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    แต่งกายผิดระเบียบ
+                    <span class="badge badge-primary badge-pill">-5</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    ทรงผมผิดระเบียบ
+                    <span class="badge badge-primary badge-pill">-5</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    ผิดระเบียบทั่วไป (พกเครื่องดื่มแอลกอฮอล์ม, บุหรี่ และอื่นๆ)
+                    <span class="badge badge-primary badge-pill">-10</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    กระทำความรุนแรงมีผลต่อโรงเรียน
+                    <span class="badge badge-primary badge-pill">-30</span>
+                </li>
+            </ul><br />
+            <h5>ตกคุณลักษณะอันพึงประสงค์ (คะแนนนักเรียน น้อยกว่า 60 คะแนน)</h5>
+            <div class="form-group form-check">
+                <input name='checkbox' type="checkbox" class="form-check-input" id="exampleCheck1" value="comfirm">
+                <label class="form-check-label" for="exampleCheck1">ติดคุณลักษณะอันพึงประสงค์</label>&emsp;
+
+            </div>
+            <button type="submit" class="btn btn-primary ml-3">SUMMIT</button>
+        </form>
+</div>
+
+{% endblock %}

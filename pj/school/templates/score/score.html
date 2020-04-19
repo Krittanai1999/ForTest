@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h2 class="text-light">SCORE<a href="{% url 'scoreadd' %}"><button type="button"
+                class="btn btn-secondary ml-3 btn btn-warning ">ADD STUDENT</button></a>
+    </h2>
+    <hr class="bg-light">
+    <p class="card-text">
+        <h5 class="card-title text-light">INFORMATION</h5>
+        <ul>
+            <li>คะแนนความประพฤติของนักเรียน เต็ม 100 คะแนน</li>
+            <li>นักเรียนจะตกคุณลักษณะอันพึงประสงค์เมื่อคะแนนต่ำกว่า 60 คะแนน</li>
+        </ul>
+        <h5 class="card-title text-light">STUDENT</h5>
+        <ul>
+            <li>STUDENT ID : {{request.user.username}}</li>
+        </ul>
+
+
+        <div class="row"></div>
+        <br /><br />
+        <h5 class="card-title text-light">LIST</h5>
+        <hr class="bg-light">
+        <table class="table table-hove">
+            <thead class="thead-dark text-center">
+                <tr>
+                    <th scope="col">STUDENT</th>
+                    <th scope="col">SCORE</th>
+                    <th scope="col">คุณลักษณะ</th>
+                    <th scope="col">EDIT</th>
+
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                {% for sc in score %}
+                <tr>
+                    <td>{{ sc.student.first_name }}  {{ sc.student.last_name }}</td>
+                    <td>{{ sc.point }}</td>
+                    {% if sc.check_type == True %}
+                    <td>
+                        <p class="text-danger">ไม่ผ่าน</p>
+                    </td>
+                    {% else %}
+                    <td>
+                        <p class="text-success">ผ่าน</p>
+                    </td>
+                    {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'scoreupdate' score_id=sc.id %}" class="btn btn-outline-primary"
+                            id="{{sc.id}}">UPDATE</a>
+                        <a href="#">
+                            <div class="btn btn-outline-warning" id="{{sc.id}}">DELETE</div>
+                        </a>
+                    </td>
+
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+</div>
+</p>
+</div>
+{% endblock %}

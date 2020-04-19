@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+    <form method="POST" action="{% url 'enrollclass' %}">
+    {% csrf_token %}
+    {% if msg %}<p class="text-success">{{msg}}</p>{% endif %}
+    <h3 class="text-light">ENROLL CLASS</h3><hr class="bg-light">
+    <p>ลงทะเบียนรายวิชาของนักเรียนที่ต้องศึกษาตามหลักสูตร 2561</p>
+    <div class="form-group col-md-4">
+      <label for="parent">STUDENT</label>
+      <select class="form-control" id="student" name="student" >
+        <option value=''>---SELECT---</option>
+        {% for std in student %}
+        <option value='{{ std.id }}'>{{std.first_name}}    {{std.last_name}}</option>
+        {% endfor %}
+    </select>
+    <label for="parent">COURSE</label>
+    <select class="form-control" id="course" name="course">
+        <option value=''>---SELECT---</option>
+        {% for c in course %}
+        <option value='{{ c.id }}'>{{c.name}}</option>
+        {% endfor %}
+    </select><br>
+      <button type="submit" class="btn btn-primary">ENROLL</button>
+    
+    </div>
+    </form>
+          
+            
+        
+</div>
+{% endblock %}

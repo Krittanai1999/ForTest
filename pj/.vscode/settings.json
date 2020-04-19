@@ -1,0 +1,4 @@
+{
+    "python.pythonPath": "env\\Scripts\\python.exe",
+    "python.analysis.cacheFolderPath": "{     \"python.pythonPath\": \"/path/to/your/venv/bin/python\", }"
+}

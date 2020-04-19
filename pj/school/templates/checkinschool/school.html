@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h2 class="text-light">CHECK IN SCHOOL<a href="{% url 'checkin_add' %}"><button type="button" class="btn btn-secondary ml-3 btn btn-warning ">CHECK IN SCHOOL</button></a>
+    </h2>
+    <hr class="bg-light">
+    <p class="card-text">
+        <h5 class="card-title text-light">INFORMATION</h5>
+        <p>ระบบเช็คชื่อเข้าโรงเรียน โดยนักเรียนสามารถล้อคอินได้เอง โดยระบบมีการตั้งเวลาและวันอัตโนมัติ</p>
+        <p>STUDENT ID : {{request.user.username}}</p>
+    
+        <div class="row"></div>
+        <br /><br />
+        <h5 class="card-title text-light">LIST</h5>
+        <hr class="bg-light">
+        <table class="table table-hove">
+            <thead class="thead-dark text-center">
+                <tr>
+                    <th scope="col">FIRSTNAME</th>
+                    <th scope="col">LASTNAME</th>
+                    <th scope="col">STUDENT ID</th>
+                    <th scope="col">STATUS</th>
+                    <th scope="col">CHECKIN</th>
+                    
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                {% for rs in regis_school %}
+                <tr>
+                    <td>{{ rs.student.first_name }}</td>
+                    <td>{{ rs.student.last_name }}</td>
+                    <td>{{ rs.student.student_user_id}}</td>
+                    {% if rs.check_type == True %}
+                    <td>
+                        <p class="text-success">ATTEND</p>
+                    </td>
+                    {% else %}
+                    <td>
+                        <p class="text-warning">ABSENT</p>
+                    </td>
+                    {% endif %}
+                    </td>
+                
+                    <td>
+                        <a href="{% url 'checkin_school' regis_school_id=rs.id %}"><button type="button"
+                        class="btn btn-secondary ml-3 btn btn-success ">CHECK IN</button></a>
+                    </td>
+                
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+</div>
+</p>
+</div>
+{% endblock %}
